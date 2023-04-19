@@ -1,6 +1,9 @@
 # Files
 *~
 .env
+activate
 
 # Directories
+__pycache__/
 env/
+data/
