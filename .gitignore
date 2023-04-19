@@ -2,5 +2,15 @@
 *~
 .env
 
+## Symlinks
+activate
+
+## Data files
+*.csv
+*.json
+
+
 # Directories
+__pycache__/
 env/
+data/
