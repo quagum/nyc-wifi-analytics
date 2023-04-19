@@ -11,5 +11,4 @@ sync_up()
 
 
 if __name__ == "__main__":
-    print(check_file("linknyc"))
     pass
