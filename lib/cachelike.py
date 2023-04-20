@@ -11,7 +11,9 @@ cache_map = {
     "nyc_wifi_hotspot_location": "yjub-udmw"
 }
 
-    
+# d_dir: data directory 
+d_dir="data"
+
 api_url_retrieval: Callable[[str,str],str] = lambda document,end="csv" : f"https://data.cityofnewyork.us/resource/{document}.{end}"
 api_url_retrieval.__doc__ = """
 api_url_retrieval: get's the url base from a particular dataset
@@ -28,8 +30,13 @@ def sync_up(file_type='csv'):
     Keyword arguments:
     file_type -- the ending file type, file_type available: 'csv','json','geojson'
     """
+
+    # Makes the directory paths if doesn't already exist
+    if(not os.path.isdir(d_dir)):
+        os.makedirs(d_dir)
+
     for k in cache_map:
-        ret_f = f"{k}.{file_type}"
+        ret_f = f"{d_dir}/{k}.{file_type}"
         retrieval_url = f"{api_url_retrieval(cache_map[k],file_type)}"
         if(not os.path.isfile(ret_f)):
             req = requests.get(retrieval_url)
