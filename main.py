@@ -61,14 +61,18 @@ installation date, active date, wifi status, tablet status, phone status
 have strong inverse relationship with status
 """
 
-from sklearn.linear_model import LinearRegression
-model_1 = LinearRegression().fit(df[["install_date"]], df["status"])
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+X = np.asarray(df[['install_date', 'wifi_status', 'tablet_status', 'phone_status']])
+Y = np.asarray(df['status'])
+X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.5, shuffle=True)
 
+model_1 = LogisticRegression().fit(X_train, y_train)
+print("Score: ", model_1.score(X_test, y_test))
+print("Weights: ", model_1.coef_)
 
-plt.scatter(df[["install_date"]], df["status"], color='g')
-plt.plot(df[["install_date"]], model_1.predict(df[["install_date"]]),color='r')
-
-
+plt.plot(y_test, color='r')
+plt.plot(model_1.predict(X_test), linestyle='dashed', color='g')
 plt.show()
 
 if __name__ == "__main__":
